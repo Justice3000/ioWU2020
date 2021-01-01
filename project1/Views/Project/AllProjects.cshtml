@@ -1,0 +1,36 @@
+
+
+@model ProjectsAllProjectsViewModel
+@{  
+    ViewData["Title"] = "All Projects";  
+} 
+
+
+    <a asp-controller="Project" asp-action="CreateProject">Create Project </a>
+   <table onmouseover="tableFunction" class="styled-table">
+    <thead>
+        <tr>
+            <th>Creator</th>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>Estimated Expenses</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var p in Model.Projects)
+        {
+           <tr>
+            <td>@p.ProjectOwner</td>
+            <td>@p.ProjectId</td>
+            <td>@p.Name / <a asp-controller="Project" asp-action="EditProject" asp-route-ProjectId="@p.ProjectId" method="post">Edit</a></td>
+            <td>@p.ProjectCost.ToString("c2",CultureInfo.CreateSpecificCulture ("sv-SE"))</td>
+            <td><details><summary>more</summary><p>@p.Description</p></details></td>
+            <td><a asp-controller="Item" asp-action="AllItemsByProject" asp-route-ProjectId="@p.ProjectId" method="post">Manage</a></td>
+            
+        </tr> 
+        }
+       
+    </tbody>
+</table>
+ <h2>Total expenses: @Model.Projects.Sum(x => x.ProjectCost).ToString("c2",CultureInfo.CreateSpecificCulture ("sv-SE"))</h2>
+     

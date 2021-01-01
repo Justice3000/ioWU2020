@@ -1,0 +1,87 @@
+@model ItemsAllViewModel
+@{  
+    ViewData["Title"] = "MyProject";  
+} 
+
+<h1> Current Project is: 
+    @if (Model!= null)
+    {
+        @Model?.Projects.FirstOrDefault(i => i.ProjectId == @Model.curProjectID).Name    
+    }
+    </h1>
+
+<a asp-controller="Item" asp-action="CreateItem" asp-route-ProjectId="@Model.curProjectID" >Create Item </a>
+
+
+  <table onmouseover="tableFunction" class="styled-table">
+    <thead>
+        <tr>
+            @* <th>Project ID</th> *@
+            <th>Quantity</th>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Supplier</th>
+            
+            <th></th>
+            <th>Owner</th>
+            <th>From project</th>
+            <th>Item ID</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                @* <td>@item.ProjectId</td> *@
+                <td>@item.Quantity</td>
+                <td> <a href="@item.Url" target="_blank">@item.Name</a></td>
+                <td>@item.SupplierPrice.ToString("c2",CultureInfo.CreateSpecificCulture ("sv-SE"))</td>
+                <td>@item.SupplierName</td>
+
+
+                
+<td>
+                   <div id="showmodal-@item.ItemId" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title"></h4>
+</div>
+<div class="modal-body">
+    <p>@item.LongImportantInfo</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    
+</div>
+        </div>
+    </div>
+</div>
+<button id='open-@item.ItemId' data-toggle="modal" data-target="#showmodal-@item.ItemId">more notes</button>
+</td>
+
+
+
+
+                <td>@item.ItemOwner</td>
+                <td>@item.Project.Name</td>
+                <td>@item.ItemId</td>
+                <td><a asp-controller="Item" asp-action="EditItem" asp-route-itemid="@item.ItemId">Edit</a></td>
+
+            </tr>
+        }
+        
+        
+     </tbody>
+</table>
+<h3> Current Expenditures: @Model?.Projects.FirstOrDefault(i => i.ProjectId == @Model.curProjectID).ProjectCost.ToString("c2",CultureInfo.CreateSpecificCulture ("sv-SE"))</h3>
+
+
+@* @for (var i =0; i < Model.Items.Count(); i++){
+        Html.RenderPartial("_modalLongInfoItems", Model.Items.ElementAt(i)?.LongImportantInfo);
+    
+} *@
+            
