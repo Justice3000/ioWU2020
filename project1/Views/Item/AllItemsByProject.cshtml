@@ -3,10 +3,16 @@
     ViewData["Title"] = "MyProject";  
 } 
 
-<h1> Current Project is: @Model?.Projects.FirstOrDefault(i => i.ProjectId == @Model.curProjectID).Name</h1>
+<h1> Current Project is: 
+    @if (Model!= null)
+    {
+        @Model?.Projects.FirstOrDefault(i => i.ProjectId == @Model.curProjectID).Name    
+    }
+    </h1>
 
-       
 <a asp-controller="Item" asp-action="CreateItem" asp-route-ProjectId="@Model.curProjectID" >Create Item </a>
+
+
   <table onmouseover="tableFunction" class="styled-table">
     <thead>
         <tr>
