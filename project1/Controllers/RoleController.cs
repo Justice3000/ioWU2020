@@ -19,6 +19,13 @@ public class RoleController:Controller{
         
     }
 
+//   [Authorize(Policy="admin")]
+//     public IActionResult Index()
+//     {
+//         var roles = roleManager.Roles.ToList();
+     
+//         return View(roles);
+//     }
 
 
     [Authorize(Policy="admin")]
@@ -34,10 +41,6 @@ public class RoleController:Controller{
         });
     }
 
-
-
-
-//  This should create a new role. saving for later if needed
      
     // public IActionResult Create()
     // {

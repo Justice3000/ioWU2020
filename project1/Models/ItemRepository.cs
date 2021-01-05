@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace project1{
-    public class ItemRepository : Models.IItemRepository
+    internal class ItemRepository : Models.IItemRepository
     {
         private readonly AppDbContext _appDbContext;
 

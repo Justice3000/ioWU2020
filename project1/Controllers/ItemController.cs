@@ -30,7 +30,6 @@ namespace project1.ItemController{
         var userEmail =_userManager.GetUserName(User);
         var items = _itemRepository.GetItemByProject(projectID);
         var projects = _projectRepository.AllProjects;
-
        
        if(User.IsInRole("manager") || User.IsInRole("admin"))
        {
@@ -38,13 +37,7 @@ namespace project1.ItemController{
              {
                  Items = items, curProjectID = projectID, Projects = projects
              });
-       }else if(projectID == 0)
-       {
-           
-           return View("~/Views/Home/Index.cshtml");
-       }
-       
-       else {
+       }else {
            items = items.Where(x=> x.ItemOwner == userEmail);
 
            return View(new ItemsAllViewModel
@@ -85,17 +78,8 @@ namespace project1.ItemController{
     [Authorize(Policy="user")]
     public IActionResult CreateItem(int ProjectId)
         {   
-            var userEmail =_userManager.GetUserName(User);
-            var projectOwnerIs = _projectRepository.AllProjects.FirstOrDefault(w => w.ProjectId == ProjectId).ProjectOwner;
-
-            if(userEmail == projectOwnerIs){
-                return View();
-            }
-            else 
-            return RedirectToAction("CreateItemComplete");
-          
             
-            
+            return View();
         }
 
 

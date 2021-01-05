@@ -13,7 +13,7 @@ namespace project1{
         public string Name{get; set;}
 
 
-        [Required(ErrorMessage = "Please enter the supplier's name")]
+         [Required(ErrorMessage = "Please enter the supplier's name")]
         [Display(Name = "Supplier")]
         [StringLength(100)]
         public string SupplierName{get; set;}
